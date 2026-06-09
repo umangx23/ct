@@ -7,6 +7,7 @@ import Settings from './components/Settings';
 import LogMealModal from './components/LogMealModal';
 import logoLight from './assets/logo-light.png';
 import logoDark from './assets/logo-dark.png';
+import { dbService } from './services/dbService';
 
 export interface UserSettings {
   calorieGoal: number;
@@ -53,6 +54,28 @@ export interface DashboardData {
   weeklyTrends: WeeklyTrendItem[];
 }
 
+export interface PortionOption {
+  label: string;
+  calories: number;
+  protein: number;
+  carbs: number;
+  fat: number;
+}
+
+export interface PortionSuggestion {
+  foodName: string;
+  options: PortionOption[];
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'ai' | 'user';
+  text: string;
+  timestamp: string;
+  image?: string;
+  portionSuggestion?: PortionSuggestion;
+}
+
 function App() {
   const [currentTab, setCurrentTab] = useState<'dashboard' | 'assistant' | 'insights' | 'settings'>('dashboard');
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -61,15 +84,12 @@ function App() {
   const [showLogModal, setShowLogModal] = useState<boolean>(false);
   const [prefillChatText, setPrefillChatText] = useState<string | null>(null);
 
-  // Fetch dashboard summary
-  const fetchDashboardData = async () => {
+  // Fetch dashboard summary via local dbService
+  const fetchDashboardData = () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/dashboard');
-      if (res.ok) {
-        const data = await res.json();
-        setDashboardData(data);
-      }
+      const data = dbService.getDashboardData();
+      setDashboardData(data);
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
@@ -97,7 +117,7 @@ function App() {
     document.documentElement.setAttribute('data-theme', nextTheme);
   };
 
-  const handleManualMealLog = async (mealData: {
+  const handleManualMealLog = (mealData: {
     name: string;
     calories: number;
     protein: number;
@@ -106,15 +126,9 @@ function App() {
     mealType: string;
   }) => {
     try {
-      const res = await fetch('/api/meals', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(mealData)
-      });
-      if (res.ok) {
-        setShowLogModal(false);
-        fetchDashboardData();
-      }
+      dbService.addMeal(mealData);
+      setShowLogModal(false);
+      fetchDashboardData();
     } catch (error) {
       console.error('Error logging meal:', error);
     }
@@ -244,6 +258,7 @@ function App() {
                 data={dashboardData} 
                 onLogMealClick={() => setShowLogModal(true)}
                 onNavigate={handleNavigate}
+                onMealDeleted={fetchDashboardData}
               />
             )}
             {currentTab === 'assistant' && (

@@ -1,27 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './AiAssistant.css';
-
-interface PortionOption {
-  label: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fat: number;
-}
-
-interface PortionSuggestion {
-  foodName: string;
-  options: PortionOption[];
-}
-
-interface ChatMessage {
-  id: string;
-  sender: 'ai' | 'user';
-  text: string;
-  timestamp: string;
-  image?: string;
-  portionSuggestion?: PortionSuggestion;
-}
+import type { ChatMessage } from '../App';
+import { dbService } from '../services/dbService';
 
 interface AiAssistantProps {
   onMealLogged: () => void;
@@ -44,14 +24,11 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
   
   const chatFeedRef = useRef<HTMLDivElement>(null);
 
-  // Fetch chat history
-  const fetchChats = async () => {
+  // Fetch chat history from local dbService
+  const fetchChats = () => {
     try {
-      const res = await fetch('/api/chat');
-      if (res.ok) {
-        const data = await res.json();
-        setMessages(data);
-      }
+      const data = dbService.getChats();
+      setMessages(data);
     } catch (error) {
       console.error('Error loading chat history:', error);
     }
@@ -68,28 +45,20 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
     }
   }, [messages, scanning]);
 
-  // Send message
-  const handleSendMessage = async (textToSend: string, imageToSend: string | null = null) => {
+  // Send message locally via dbService
+  const handleSendMessage = (textToSend: string, imageToSend: string | null = null) => {
     if (!textToSend.trim() && !imageToSend) return;
     
     try {
       setSending(true);
-      const res = await fetch('/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: textToSend, image: imageToSend })
-      });
-      
-      if (res.ok) {
-        const data = await res.json();
-        setMessages(data.chatHistory);
-        setInputText('');
+      const data = dbService.sendChat(textToSend, imageToSend);
+      setMessages(data.chatHistory);
+      setInputText('');
 
-        // If the reply contains logged text, trigger refresh in App.tsx
-        const lastMsg = data.newMessages[data.newMessages.length - 1];
-        if (lastMsg && lastMsg.text && lastMsg.text.includes('automatically logged')) {
-          onMealLogged();
-        }
+      // If the reply contains logged text, trigger refresh in App.tsx
+      const lastMsg = data.newMessages[data.newMessages.length - 1];
+      if (lastMsg && lastMsg.text && lastMsg.text.includes('automatically logged')) {
+        onMealLogged();
       }
     } catch (error) {
       console.error('Error sending message:', error);
@@ -137,15 +106,12 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
     }, 1200);
   };
 
-  // Clear Chat History
-  const handleClearHistory = async () => {
+  // Clear Chat History using local dbService
+  const handleClearHistory = () => {
     if (window.confirm('Clear all chat history?')) {
       try {
-        const res = await fetch('/api/chat', { method: 'DELETE' });
-        if (res.ok) {
-          const data = await res.json();
-          setMessages(data);
-        }
+        const data = dbService.clearChats();
+        setMessages(data);
       } catch (error) {
         console.error('Error clearing chat:', error);
       }

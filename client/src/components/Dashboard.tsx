@@ -1,14 +1,16 @@
 import React from 'react';
 import './Dashboard.css';
 import type { DashboardData } from '../App';
+import { dbService } from '../services/dbService';
 
 interface DashboardProps {
   data: DashboardData;
   onLogMealClick: () => void;
   onNavigate: (tab: 'dashboard' | 'assistant' | 'insights' | 'settings') => void;
+  onMealDeleted: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate }) => {
+const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate, onMealDeleted }) => {
   const { settings, today, recentMeals, weeklyTrends } = data;
 
   // Calorie calculations
@@ -44,17 +46,13 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
 
   const status = getStatus();
 
-  // Delete meal handler
-  const handleDeleteMeal = async (id: string) => {
+  // Delete meal handler using local dbService
+  const handleDeleteMeal = (id: string) => {
     if (window.confirm('Are you sure you want to delete this meal?')) {
       try {
-        const res = await fetch(`/api/meals/${id}`, {
-          method: 'DELETE'
-        });
-        if (res.ok) {
-          // Trigger a reload of the parent data
-          onNavigate('dashboard'); // This resets/refetches via navigation trigger
-          window.location.reload(); // Quick refresh to update totals
+        const success = dbService.deleteMeal(id);
+        if (success) {
+          onMealDeleted();
         }
       } catch (error) {
         console.error('Error deleting meal:', error);

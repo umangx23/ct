@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './HealthInsights.css';
 import type { MealItem } from '../App';
+import { dbService } from '../services/dbService';
 
 interface HealthInsightsProps {
   calorieGoal: number;
@@ -31,24 +32,18 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
   const [selectedDayMeals, setSelectedDayMeals] = useState<MealItem[]>([]);
   const [allMeals, setAllMeals] = useState<MealItem[]>([]);
 
-  // Fetch insights data
-  const fetchInsights = async () => {
+  // Fetch insights data from local dbService
+  const fetchInsights = () => {
     try {
       setLoading(true);
-      const res = await fetch('/api/insights?month=2023-10');
-      if (res.ok) {
-        const data = await res.json();
-        setCalendarDays(data.calendarDays);
-        setWeightHistory(data.weightProgress);
-        setAvgCalories(data.avgCalories);
-      }
+      const data = dbService.getInsights('2023-10');
+      setCalendarDays(data.calendarDays);
+      setWeightHistory(data.weightProgress);
+      setAvgCalories(data.avgCalories);
       
       // Fetch all meals to filter for selected day details
-      const mealsRes = await fetch('/api/meals');
-      if (mealsRes.ok) {
-        const mealsData = await mealsRes.json();
-        setAllMeals(mealsData);
-      }
+      const mealsData = dbService.getMeals();
+      setAllMeals(mealsData);
     } catch (error) {
       console.error('Error fetching insights:', error);
     } finally {

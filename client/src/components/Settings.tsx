@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Settings.css';
 import type { UserSettings } from '../App';
+import { dbService } from '../services/dbService';
 
 interface SettingsProps {
   settings: UserSettings;
@@ -18,7 +19,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsUpdate }) => {
   const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
   const [saving, setSaving] = useState<boolean>(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
     setAlert(null);
@@ -31,28 +32,20 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsUpdate }) => {
     }
 
     try {
-      const res = await fetch('/api/settings', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          calorieGoal,
-          proteinGoal,
-          carbsGoal,
-          fatGoal,
-          currentWeight,
-          weightGoal
-        })
+      dbService.updateSettings({
+        calorieGoal,
+        proteinGoal,
+        carbsGoal,
+        fatGoal,
+        currentWeight,
+        weightGoal
       });
 
-      if (res.ok) {
-        setAlert({ type: 'success', message: 'Goals updated successfully!' });
-        onSettingsUpdate();
-      } else {
-        setAlert({ type: 'error', message: 'Failed to save settings. Please try again.' });
-      }
+      setAlert({ type: 'success', message: 'Goals updated successfully!' });
+      onSettingsUpdate();
     } catch (error) {
       console.error('Error saving settings:', error);
-      setAlert({ type: 'error', message: 'Server connection failed.' });
+      setAlert({ type: 'error', message: 'Failed to save settings. Please try again.' });
     } finally {
       setSaving(false);
     }
