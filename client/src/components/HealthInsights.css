@@ -1,0 +1,351 @@
+.insights-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+@media (min-width: 992px) {
+  .insights-container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .insights-main {
+    flex: 1;
+  }
+
+  .insights-sidebar {
+    width: 340px;
+    position: sticky;
+    top: 104px;
+    flex-shrink: 0;
+  }
+}
+
+/* Calendar Section */
+.calendar-card {
+  margin-bottom: var(--space-lg);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.calendar-header h3 {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.calendar-nav-btns {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--on-surface-variant);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: var(--space-sm);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-sm);
+}
+
+.calendar-day-placeholder {
+  aspect-ratio: 1;
+}
+
+.calendar-day-btn {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-container-high);
+  background-color: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.calendar-day-btn:hover {
+  border-color: var(--primary);
+  background-color: var(--surface-container-low);
+  transform: translateY(-1px);
+}
+
+.calendar-day-btn.selected {
+  border-color: var(--primary);
+  background-color: var(--surface-container);
+  box-shadow: 0 2px 8px rgba(0, 110, 47, 0.1);
+}
+
+.day-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+.calendar-day-btn.selected .day-number {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.day-indicator-dots {
+  display: flex;
+  gap: 3px;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+}
+
+.day-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+.day-dot.met { background-color: var(--primary-container); }
+.day-dot.over { background-color: var(--error); }
+.day-dot.workout { background-color: var(--secondary-container); }
+
+.calendar-legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  font-weight: 500;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+/* Trends grid */
+.trends-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+
+@media (min-width: 576px) {
+  .trends-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.trend-insight-badge {
+  background-color: rgba(34, 197, 94, 0.08);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+}
+
+.trend-bars-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 120px;
+  gap: 6px;
+  margin-top: var(--space-lg);
+  position: relative;
+  padding-bottom: 2px;
+}
+
+.trend-chart-bg-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1.5px dashed var(--outline-variant);
+  z-index: 1;
+}
+
+.trend-chart-bar {
+  flex: 1;
+  background-color: var(--surface-container-highest);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  height: 0;
+  transition: height 0.5s ease-out;
+  z-index: 2;
+}
+
+.trend-chart-bar.met {
+  background-color: rgba(0, 110, 47, 0.4);
+}
+
+.trend-chart-bar.over {
+  background-color: rgba(186, 26, 26, 0.4);
+}
+
+.trend-svg-container {
+  width: 100%;
+  height: 120px;
+  margin-top: var(--space-lg);
+}
+
+/* Day Detail Sidebar */
+.detail-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-lg);
+}
+
+.detail-sidebar-title {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.detail-status-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 2px;
+}
+
+.detail-status-text.over {
+  color: var(--error);
+}
+
+.donut-chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.css-donut {
+  width: 130px;
+  height: 130px;
+  border-radius: var(--radius-full);
+  border: 12px solid var(--surface-container-high);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.css-donut-overlay {
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  width: 130px;
+  height: 130px;
+  border-radius: var(--radius-full);
+  border: 12px solid var(--primary-container);
+  clip-path: polygon(50% 50%, 50% 0, 100% 0, 100% 100%, 0 100%, 0 50%);
+  transform: rotate(0deg);
+}
+
+.css-donut-overlay.over {
+  border-color: var(--error);
+  clip-path: none;
+}
+
+.donut-calories-number {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--on-background);
+  line-height: 1;
+}
+
+.donut-calories-unit {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin-top: 2px;
+}
+
+/* Macros mini badges block */
+.sidebar-macros-row {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--surface-container-low);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.sidebar-macro-cell {
+  text-align: center;
+}
+
+.sidebar-macro-lbl {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin-bottom: 2px;
+}
+
+.sidebar-macro-val {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--on-background);
+}
+
+.sidebar-macro-val.protein { color: var(--secondary); }
+.sidebar-macro-val.carbs { color: var(--primary); }
+.sidebar-macro-val.fat { color: var(--outline); }
+
+/* Sidebar Meals Log list */
+.sidebar-meals-log {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 240px;
+  overflow-y: auto;
+  margin-bottom: var(--space-lg);
+}
+
+.sidebar-meal-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.sidebar-meal-row:last-child {
+  border-bottom: none;
+}
+
+.sidebar-meal-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--on-background);
+}
+
+.sidebar-meal-desc {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin-top: 2px;
+}
+
+.sidebar-meal-cals {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+}

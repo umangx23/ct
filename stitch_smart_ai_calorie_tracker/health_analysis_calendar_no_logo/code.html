@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Health Analysis &amp; Calendar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              orange: '#b34700',
+              orangeLight: '#ffebd6',
+              blue: '#1a56db',
+              blueLight: '#e1effe',
+              gray: '#f9fafb',
+              grayDark: '#111827',
+              grayMedium: '#6b7280'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-utilities">
+    /* Hide scrollbar for cleaner look in the sidebar */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 text-brand-grayDark font-sans h-screen flex overflow-hidden">
+<!-- BEGIN: Sidebar -->
+<aside class="w-64 bg-white border-r border-gray-200 flex flex-col justify-between hidden md:flex h-full z-10 relative shadow-sm" data-purpose="sidebar">
+<div class="flex-1 overflow-y-auto no-scrollbar pb-4 pt-6 px-4">
+<!-- User Profile Summary -->
+<div class="flex items-center gap-3 mb-8 px-2" data-purpose="user-summary">
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover border border-gray-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv5IdjYr5JYB6YFnRXpT-FLpz1r8Gh2rYcVMxNfFtCXEhSfhZwrbjEaSVIaCMCEeLhcAq0xe84NVdUbQ7Vh7ZXLYFgp8FvtNIxYRPbkG5UcyDFP1-dwxsEl7El82iY6yjIbaki8WhBaeJSpAzwCfHMFX_7t_fLhz5-QHhGgbjF-DF193HY54LR5ukwNJQYSNDEVbgX7AJ-R8BuvzkZGDgZebGSI7wwVXlVcqwB3khGkn7DWIMwGBACB28MHHr69PT4RQdbqXX1m5NJ"/>
+<div>
+<p class="text-sm font-medium">Supportive Expert</p>
+</div>
+</div>
+<!-- Main Navigation -->
+<nav class="space-y-1" data-purpose="main-navigation">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-brand-grayMedium hover:bg-gray-50 hover:text-brand-grayDark transition-colors group" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-brand-grayMedium hover:bg-gray-50 hover:text-brand-grayDark transition-colors group" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-medium">AI Assistant</span>
+</a>
+<a aria-current="page" class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-brand-orangeLight text-brand-orange border-l-4 border-brand-orange transition-colors group relative" href="#">
+<span class="text-sm font-medium">Health Insights</span>
+</a>
+</nav>
+</div>
+<div class="p-4 border-t border-gray-200 bg-white">
+<nav class="space-y-1 mb-4" data-purpose="secondary-navigation">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-brand-grayMedium hover:bg-gray-50 hover:text-brand-grayDark transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-brand-grayMedium hover:bg-gray-50 hover:text-brand-grayDark transition-colors" href="#">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+<span class="text-sm font-medium">Support</span>
+</a>
+</nav>
+<button class="w-full bg-brand-orange hover:bg-orange-700 text-white font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm" data-purpose="new-meal-action">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+        Log New Meal
+      </button>
+</div>
+</aside>
+<!-- END: Sidebar -->
+<!-- BEGIN: Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden bg-white/50" data-purpose="main-content">
+<!-- BEGIN: Top Header -->
+<header class="h-16 flex items-center justify-between px-6 lg:px-8 border-b border-gray-200 bg-white shadow-sm shrink-0" data-purpose="top-header">
+<div class="flex items-center gap-4">
+<!-- Mobile menu button (hidden on larger screens) -->
+<button class="md:hidden text-gray-500 hover:text-gray-700 p-1">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<h1 class="text-xl font-semibold text-brand-orange">NutriAI</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<button class="text-gray-500 hover:text-gray-700 p-1 rounded-full hover:bg-gray-100 transition-colors">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</header>
+<!-- END: Top Header -->
+<!-- BEGIN: Scrollable Content -->
+<div class="flex-1 overflow-auto p-6 lg:p-8 flex flex-col xl:flex-row gap-6" data-purpose="scrollable-content">
+<!-- Middle Column: Calendar and Trends -->
+<div class="flex-1 flex flex-col gap-6 max-w-4xl" data-purpose="middle-column">
+<!-- Weekly Overview / Calendar Widget -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6" data-purpose="weekly-calendar">
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-lg font-semibold">Weekly Overview</h2>
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded hover:bg-gray-100 text-gray-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+<span class="text-sm font-medium">May 2024</span>
+<button class="p-1.5 rounded hover:bg-gray-100 text-gray-500"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg></button>
+</div>
+</div>
+<div class="grid grid-cols-7 gap-2 text-center">
+<!-- Day Labels -->
+<div class="text-xs font-medium text-gray-400 pb-2">Mon</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Tue</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Wed</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Thu</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Fri</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Sat</div>
+<div class="text-xs font-medium text-gray-400 pb-2">Sun</div>
+<!-- Dates and Activity Dots -->
+<!-- Example Day (Past, Good) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm">13</span>
+<div class="w-2 h-2 rounded-full bg-brand-orange"></div>
+</div>
+<!-- Example Day (Past, Ok) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm">14</span>
+<div class="w-2 h-2 rounded-full bg-brand-orange/40"></div>
+</div>
+<!-- Example Day (Selected, Today) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg bg-brand-blue text-white shadow-md cursor-pointer">
+<span class="text-sm font-bold">15</span>
+<div class="w-2 h-2 rounded-full bg-white"></div>
+</div>
+<!-- Example Day (Future) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm text-gray-500">16</span>
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+<!-- Example Day (Future) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm text-gray-500">17</span>
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+<!-- Example Day (Future) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm text-gray-500">18</span>
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+<!-- Example Day (Future) -->
+<div class="flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer hover:bg-gray-50">
+<span class="text-sm text-gray-500">19</span>
+<div class="w-2 h-2 rounded-full bg-transparent"></div>
+</div>
+</div>
+</section>
+<!-- Nutrition Trends Chart Placeholder -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex-1 min-h-[300px] flex flex-col" data-purpose="nutrition-trends">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-semibold">Calorie Intake vs Goal</h2>
+<select class="text-sm border-gray-200 rounded-lg text-gray-600 bg-gray-50 focus:ring-brand-blue focus:border-brand-blue py-1.5 pl-3 pr-8">
+<option>This Week</option>
+<option>Last Week</option>
+<option>This Month</option>
+</select>
+</div>
+<div aria-label="Bar chart showing daily calories" class="flex-1 flex items-end justify-between pt-8 pb-2 px-2 relative">
+<!-- Y-axis labels -->
+<div class="absolute left-0 top-0 bottom-8 flex flex-col justify-between text-xs text-gray-400 w-8">
+<span>2.5k</span>
+<span>1.5k</span>
+<span>500</span>
+</div>
+<!-- Grid lines -->
+<div class="absolute left-8 right-0 top-2 border-b border-gray-100 border-dashed"></div>
+<div class="absolute left-8 right-0 top-1/2 border-b border-gray-100 border-dashed"></div>
+<!-- Bars -->
+<div class="w-8 ml-10 flex flex-col justify-end items-center group">
+<div class="w-full bg-brand-orange/60 rounded-t-sm h-[60%] group-hover:bg-brand-orange transition-colors relative"></div>
+<span class="text-xs text-gray-500 mt-2">M</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center group">
+<div class="w-full bg-brand-orange/80 rounded-t-sm h-[80%] group-hover:bg-brand-orange transition-colors"></div>
+<span class="text-xs text-gray-500 mt-2">T</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center group">
+<div class="w-full bg-brand-blue rounded-t-sm h-[45%] relative">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">1,450 kcal</div>
+</div>
+<span class="text-xs font-bold text-brand-grayDark mt-2">W</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center">
+<div class="w-full bg-gray-100 rounded-t-sm h-[5%]"></div>
+<span class="text-xs text-gray-400 mt-2">T</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center">
+<div class="w-full bg-gray-100 rounded-t-sm h-[5%]"></div>
+<span class="text-xs text-gray-400 mt-2">F</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center">
+<div class="w-full bg-gray-100 rounded-t-sm h-[5%]"></div>
+<span class="text-xs text-gray-400 mt-2">S</span>
+</div>
+<div class="w-8 flex flex-col justify-end items-center">
+<div class="w-full bg-gray-100 rounded-t-sm h-[5%]"></div>
+<span class="text-xs text-gray-400 mt-2">S</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Daily Details & Progress -->
+<aside class="w-full xl:w-[350px] shrink-0 flex flex-col gap-6" data-purpose="daily-details-sidebar">
+<!-- Daily Progress Rings -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex flex-col items-center" data-purpose="macro-progress">
+<h3 class="text-md font-semibold self-start mb-6 w-full border-b border-gray-100 pb-3">Today's Macros</h3>
+<div class="relative w-48 h-48 mb-6 flex items-center justify-center">
+<!-- Simulated Progress Rings using SVG -->
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<!-- Background rings -->
+<circle cx="50" cy="50" fill="none" r="45" stroke="#f3f4f6" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="33" stroke="#f3f4f6" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="21" stroke="#f3f4f6" stroke-width="8"></circle>
+<!-- Progress rings (Orange & Blue Theme) -->
+<!-- Carbs (Outer) -->
+<circle class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="45" stroke="#b34700" stroke-dasharray="282.7" stroke-dashoffset="84.8" stroke-linecap="round" stroke-width="8"></circle>
+<!-- Protein (Middle) -->
+<circle class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="33" stroke="#1a56db" stroke-dasharray="207.3" stroke-dashoffset="41.4" stroke-linecap="round" stroke-width="8"></circle>
+<!-- Fat (Inner) -->
+<circle class="transition-all duration-1000 ease-out" cx="50" cy="50" fill="none" r="21" stroke="#ffebd6" stroke-dasharray="131.9" stroke-dashoffset="65.9" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="text-2xl font-bold text-gray-800">1,450</span>
+<span class="text-xs text-gray-500 uppercase tracking-wider">kcal</span>
+</div>
+</div>
+<!-- Macro Legend -->
+<div class="w-full space-y-3">
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-orange block"></span>
+<span class="text-gray-600 font-medium">Carbs</span>
+</div>
+<span class="font-semibold text-gray-800">180g <span class="text-gray-400 font-normal text-xs">/ 250g</span></span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-blue block"></span>
+<span class="text-gray-600 font-medium">Protein</span>
+</div>
+<span class="font-semibold text-gray-800">110g <span class="text-gray-400 font-normal text-xs">/ 140g</span></span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-brand-orangeLight border border-brand-orange/20 block"></span>
+<span class="text-gray-600 font-medium">Fat</span>
+</div>
+<span class="font-semibold text-gray-800">45g <span class="text-gray-400 font-normal text-xs">/ 65g</span></span>
+</div>
+</div>
+</section>
+<!-- Recent Logs List -->
+<section class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex-1" data-purpose="recent-meals">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-md font-semibold">Today's Logs</h3>
+<button class="text-sm text-brand-blue hover:text-blue-800 font-medium">View All</button>
+</div>
+<div class="space-y-4">
+<!-- Meal Item -->
+<div class="flex items-start gap-4 p-3 rounded-lg border border-gray-50 hover:bg-gray-50 transition-colors">
+<div class="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center shrink-0">
+<span class="text-xl">🥣</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-800 truncate">Oatmeal &amp; Berries</p>
+<p class="text-xs text-gray-500">Breakfast • 8:30 AM</p>
+</div>
+<div class="text-right shrink-0">
+<p class="text-sm font-bold text-gray-800">320</p>
+<p class="text-xs text-gray-400">kcal</p>
+</div>
+</div>
+<!-- Meal Item -->
+<div class="flex items-start gap-4 p-3 rounded-lg border border-gray-50 hover:bg-gray-50 transition-colors">
+<div class="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center shrink-0">
+<span class="text-xl">🥗</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-800 truncate">Grilled Chicken Salad</p>
+<p class="text-xs text-gray-500">Lunch • 1:00 PM</p>
+</div>
+<div class="text-right shrink-0">
+<p class="text-sm font-bold text-gray-800">450</p>
+<p class="text-xs text-gray-400">kcal</p>
+</div>
+</div>
+<!-- Meal Item -->
+<div class="flex items-start gap-4 p-3 rounded-lg border border-gray-50 hover:bg-gray-50 transition-colors">
+<div class="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center shrink-0">
+<span class="text-xl">🍎</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold text-gray-800 truncate">Apple &amp; Almonds</p>
+<p class="text-xs text-gray-500">Snack • 4:15 PM</p>
+</div>
+<div class="text-right shrink-0">
+<p class="text-sm font-bold text-gray-800">180</p>
+<p class="text-xs text-gray-400">kcal</p>
+</div>
+</div>
+<!-- CTA Add Meal (Inline) -->
+<button class="w-full mt-2 py-3 border-2 border-dashed border-gray-200 rounded-lg text-sm text-gray-500 font-medium hover:border-brand-blue hover:text-brand-blue transition-colors flex items-center justify-center gap-2">
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Add Dinner
+             </button>
+</div>
+</section>
+</aside>
+</div>
+<!-- END: Scrollable Content -->
+</main>
+<!-- END: Main Content Area -->
+</body></html>

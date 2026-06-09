@@ -1,0 +1,22 @@
+{
+  "name": "calorie-tracker-fullstack",
+  "version": "1.0.0",
+  "description": "Unified and responsive calorie tracker (NutriAI) fullstack application",
+  "main": "server/server.js",
+  "scripts": {
+    "install-all": "npm install && npm install --prefix client",
+    "dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
+    "dev-server": "nodemon server/server.js",
+    "dev-client": "npm run dev --prefix client",
+    "build-client": "npm run build --prefix client",
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.9"
+  }
+}

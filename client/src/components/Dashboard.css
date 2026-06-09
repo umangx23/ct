@@ -1,0 +1,507 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+/* Card base details */
+.card-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+  width: 100%;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--on-surface);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(34, 197, 94, 0.1);
+  color: var(--primary);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.warning {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.status-badge.danger {
+  background-color: rgba(186, 26, 26, 0.1);
+  color: var(--error);
+  border-color: rgba(186, 26, 26, 0.2);
+}
+
+/* 1. Daily Progress Ring Card */
+.progress-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.progress-ring-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: var(--space-md) 0;
+}
+
+.progress-ring-svg {
+  transform: rotate(-90deg);
+  width: 100%;
+  height: 100%;
+}
+
+.progress-ring-circle-bg {
+  stroke: var(--surface-container-high);
+}
+
+.progress-ring-circle {
+  stroke: var(--primary);
+  transition: stroke-dashoffset 0.5s ease-in-out, stroke var(--transition-normal);
+}
+
+.progress-ring-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-calories {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--on-background);
+}
+
+.progress-goal {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  margin-top: var(--space-xs);
+}
+
+.progress-stats-footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-t: 1px solid var(--outline-variant);
+}
+
+.stat-item {
+  text-align: center;
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  margin-bottom: 2px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--on-background);
+}
+
+.stat-value.primary {
+  color: var(--primary);
+}
+
+/* 2. Macronutrients Card */
+.macros-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.macro-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.macro-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.macro-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.macro-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+.macro-dot.protein { background-color: var(--secondary); }
+.macro-dot.carbs { background-color: var(--tertiary-container); }
+.macro-dot.fat { background-color: var(--outline); }
+
+.macro-val {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--on-surface-variant);
+}
+
+.macro-progress-bar {
+  width: 100%;
+  height: 8px;
+  background-color: var(--surface-container-high);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.macro-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease-out;
+}
+
+.macro-progress-fill.protein { background-color: var(--secondary); }
+.macro-progress-fill.carbs { background-color: var(--tertiary-container); }
+.macro-progress-fill.fat { background-color: var(--outline); }
+
+.macros-footer {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--outline-variant);
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.macros-footer .material-symbols-outlined {
+  color: var(--secondary);
+  font-size: 18px;
+}
+
+/* 3. Weekly Trends Card */
+.weekly-trends-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.trends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.trends-badge {
+  background-color: rgba(0, 88, 190, 0.08);
+  color: var(--secondary);
+  border: 1px solid rgba(0, 88, 190, 0.15);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-md);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trends-chart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 130px;
+  gap: 8px;
+  margin-top: var(--space-lg);
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--outline-variant);
+}
+
+.trend-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+  cursor: pointer;
+}
+
+.trend-bar-tooltip {
+  visibility: hidden;
+  background-color: var(--on-background);
+  color: var(--background);
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  font-size: 11px;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.trend-bar-container:hover .trend-bar-tooltip {
+  visibility: visible;
+}
+
+.trend-bar {
+  width: 100%;
+  background-color: rgba(0, 110, 47, 0.35);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  transition: height 0.5s ease-out, background-color var(--transition-fast);
+}
+
+.trend-bar-container:hover .trend-bar {
+  background-color: var(--primary);
+}
+
+.trend-bar.current {
+  background-color: var(--primary);
+}
+
+.trend-bar-label {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin-top: var(--space-sm);
+}
+
+/* 4. Recent Meals Card */
+.meals-list-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.meals-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.meals-list-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.meal-row-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.meal-row-item:hover {
+  background-color: var(--surface-container-low);
+  border-color: var(--outline-variant);
+}
+
+.meal-img-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  background-color: var(--surface-container-high);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.meal-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.meal-img-placeholder {
+  color: var(--outline);
+}
+
+.meal-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.meal-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.meal-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--on-background);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meal-type-tag {
+  background-color: rgba(0, 110, 47, 0.1);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.meal-meta {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  margin-top: 4px;
+}
+
+.meal-cal-section {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.meal-cals {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--on-background);
+}
+
+.meal-cal-unit {
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  display: block;
+  line-height: 1;
+}
+
+.meal-delete-btn {
+  color: var(--on-surface-variant);
+  opacity: 0;
+  padding: 6px;
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+}
+
+.meal-row-item:hover .meal-delete-btn {
+  opacity: 1;
+}
+
+.meal-delete-btn:hover {
+  color: var(--error);
+  background-color: var(--error-container);
+}
+
+.no-meals-state {
+  text-align: center;
+  padding: var(--space-xl);
+  color: var(--on-surface-variant);
+}
+
+/* 5. AI Call to Action Card */
+.ai-callout-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-icon-container {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: rgba(0, 88, 190, 0.1);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  border: 1px solid rgba(0, 88, 190, 0.2);
+}
+
+.ai-callout-card h3 {
+  font-size: 18px;
+  margin-bottom: var(--space-sm);
+}
+
+.ai-callout-card p {
+  font-size: 14px;
+  color: var(--on-surface-variant);
+  margin-bottom: var(--space-lg);
+  max-width: 280px;
+}
+
+.ai-callout-card button {
+  width: 100%;
+}
+
+/* Grid Layout Responsiveness */
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  .progress-card {
+    grid-column: span 4;
+  }
+
+  .macros-card {
+    grid-column: span 4;
+  }
+
+  .weekly-trends-card {
+    grid-column: span 4;
+  }
+
+  .meals-list-card {
+    grid-column: span 8;
+  }
+
+  .ai-callout-card {
+    grid-column: span 4;
+  }
+}

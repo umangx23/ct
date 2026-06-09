@@ -1,0 +1,211 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<title>NutriAI Assistant</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom scrollbar for webkit to keep it clean */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* close to outline-variant but keeping it subtle */
+            border-radius: 4px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#6bff8f",
+                        "surface-container-highest": "#d3e4fe",
+                        "on-secondary-fixed": "#001a42",
+                        "on-background": "#0b1c30",
+                        "primary": "#006e2f",
+                        "on-tertiary-container": "#004a31",
+                        "on-secondary-fixed-variant": "#004395",
+                        "secondary": "#0058be",
+                        "primary-fixed-dim": "#4ae176",
+                        "error-container": "#ffdad6",
+                        "outline": "#6d7b6c",
+                        "on-tertiary-fixed": "#002113",
+                        "on-secondary-container": "#fefcff",
+                        "background": "#f8f9ff",
+                        "primary-container": "#22c55e",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#6ffbbe",
+                        "tertiary": "#006c49",
+                        "inverse-surface": "#213145",
+                        "tertiary-container": "#28c38a",
+                        "on-surface-variant": "#3d4a3d",
+                        "on-primary-fixed-variant": "#005321",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#4ae176",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#004b1e",
+                        "surface-dim": "#cbdbf5",
+                        "surface-bright": "#f8f9ff",
+                        "on-primary-fixed": "#002109",
+                        "surface-container-high": "#dce9ff",
+                        "secondary-container": "#2170e4",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#d3e4fe",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-fixed": "#d8e2ff",
+                        "outline-variant": "#bccbb9",
+                        "secondary-fixed-dim": "#adc6ff",
+                        "surface-container": "#e5eeff",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#0b1c30",
+                        "inverse-on-surface": "#eaf1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#006e2f",
+                        "surface": "#f8f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "stack-md": "16px",
+                        "gutter": "24px",
+                        "base": "4px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "margin-mobile": "16px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "display-lg": ["Manrope"],
+                        "headline-lg-mobile": ["Manrope"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "stats-number": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "stats-number": ["20px", { "lineHeight": "24px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md text-body-md antialiased overflow-hidden">
+<!-- Mobile App Container -->
+<div class="flex flex-col h-[100dvh] w-full max-w-md mx-auto relative shadow-2xl bg-background">
+<!-- Top App Bar (Task-focused context, hiding global nav shell) -->
+<header class="flex items-center justify-between px-margin-mobile h-16 bg-white/70 backdrop-blur-xl border-b border-surface-container-high z-10 shrink-0 shadow-sm">
+<button aria-label="Back" class="p-2 -ml-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="font-headline-md text-headline-md text-on-background text-lg leading-tight">NutriAI Assistant</h1>
+<span class="font-label-md text-label-md text-primary text-[10px] uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span> Online
+                </span>
+</div>
+<button aria-label="More options" class="p-2 -mr-2 rounded-full hover:bg-surface-variant transition-colors text-on-surface">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Chat Area -->
+<main class="flex-1 overflow-y-auto px-margin-mobile py-stack-md flex flex-col gap-stack-lg relative bg-surface-container-lowest/50" id="chat-container">
+<!-- Timestamp -->
+<div class="text-center w-full">
+<span class="font-label-md text-label-md text-on-surface-variant/70 text-xs uppercase">Today, 12:45 PM</span>
+</div>
+<!-- AI Message (Glassmorphic) -->
+<div class="flex gap-3 max-w-[85%] self-start animate-[fadeIn_0.3s_ease-out]">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center shrink-0 border border-white shadow-sm overflow-hidden">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="bg-white/80 backdrop-blur-[20px] border border-white shadow-[0_4px_15px_rgba(0,0,0,0.04)] rounded-2xl rounded-tl-sm p-4 relative">
+<p class="text-on-surface font-body-md text-body-md leading-relaxed">
+                        Hi there! I'm ready to help you track your meals. What are we having for lunch today?
+                    </p>
+</div>
+</div>
+<!-- User Message with Image -->
+<div class="flex gap-3 max-w-[85%] self-end flex-row-reverse animate-[fadeIn_0.4s_ease-out]">
+<div class="bg-surface-variant text-on-surface rounded-2xl rounded-tr-sm p-3 shadow-sm flex flex-col gap-2 border border-surface-container-high">
+<div class="relative w-full aspect-square rounded-xl overflow-hidden border border-outline/10">
+<img alt="User uploaded food photo" class="w-full h-full object-cover" data-alt="A top-down view of a vibrant, healthy chicken salad bowl sitting on a light, clean surface. The bowl is filled with fresh mixed greens, bright red cherry tomatoes, slices of ripe green avocado, and perfectly grilled, golden-brown chicken breast strips. The lighting is soft, natural, and high-key, creating a fresh, appetizing, and modern aesthetic consistent with a premium health and wellness application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlTA40b8bKut0JQCn9f6mlNoCdMIUxG5n--oirESaqeTaiMs4EejRWTDJLtjKf1MsZOPyYfiH8HUm826rZ1tdkrKq3hKH6JX92o073NqWKW0omnHOFZWvwWiFLp9S5b0wzThcqB7JdsRl48AqTdwP4VIPXuM03XASLZTQ5PyMYhcqkZkwHRtfm3hx6_yAatIPCloBY_Y6f05IoRYGjykDHQCnWk04FiqW4RVtMcVC17HNrP_wQ1SiXYmc-wnUCfh8wb-cHNqlQnZ4S">
+</div>
+<p class="font-body-md text-body-md px-1">Just grabbed this grilled chicken salad from the cafe.</p>
+</div>
+</div>
+<!-- AI Message (Analysis & Options) -->
+<div class="flex gap-3 max-w-[90%] self-start animate-[fadeIn_0.5s_ease-out]">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center shrink-0 border border-white shadow-sm overflow-hidden">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="smart_toy">smart_toy</span>
+</div>
+<div class="flex flex-col gap-stack-sm w-full">
+<div class="bg-white/80 backdrop-blur-[20px] border border-white shadow-[0_4px_15px_rgba(0,0,0,0.04)] rounded-2xl rounded-tl-sm p-4 relative">
+<div class="absolute -top-3 right-3 bg-tertiary-container text-on-tertiary-container px-2 py-0.5 rounded-full font-label-md text-[10px] tracking-wider uppercase flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[12px]" data-icon="verified">verified</span> AI Scanned
+                        </div>
+<p class="text-on-surface font-body-md text-body-md leading-relaxed mt-1">
+                            That looks delicious and packed with nutrients! I can identify <strong>mixed greens</strong>, <strong>cherry tomatoes</strong>, <strong>avocado</strong>, and <strong>grilled chicken</strong>.
+                            <br><br>
+                            To log the calories accurately, could you clarify the portion size of the chicken?
+                        </p>
+</div>
+<!-- Quick Replies -->
+<div class="flex flex-wrap gap-2 mt-1 ml-2">
+<button class="bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary/20 transition-colors rounded-full px-4 py-2 font-label-md text-label-md flex items-center gap-1">
+                            About 4 oz
+                        </button>
+<button class="bg-secondary/10 text-secondary border border-secondary/20 hover:bg-secondary/20 transition-colors rounded-full px-4 py-2 font-label-md text-label-md flex items-center gap-1">
+                            About 6 oz
+                        </button>
+<button class="bg-surface-container text-on-surface-variant border border-outline-variant/30 hover:bg-surface-container-high transition-colors rounded-full px-4 py-2 font-label-md text-label-md">
+                            I'm not sure
+                        </button>
+</div>
+</div>
+</div>
+<!-- Empty space to ensure scroll past absolute input -->
+<div class="h-4"></div>
+</main>
+<!-- Sticky Input Area -->
+
+<div class="bg-surface p-3 shrink-0 z-20 relative"><div class="flex items-end gap-2 bg-white rounded-[24px] border border-outline-variant/50 p-1 shadow-sm focus-within:border-secondary focus-within:ring-2 focus-within:ring-secondary/10 transition-all"><button aria-label="Upload photo" class="p-2.5 text-on-surface-variant hover:text-primary transition-colors rounded-full shrink-0 flex items-center justify-center bg-surface-container-lowest"><span class="material-symbols-outlined" data-icon="add_a_photo" style="font-variation-settings: 'FILL' 1;">add_a_photo</span></button><textarea class="flex-1 bg-transparent border-none focus:ring-0 resize-none py-3 px-2 font-body-md text-body-md text-on-surface placeholder:text-outline max-h-[120px] min-h-[48px]" placeholder="Describe your meal..." rows="1"></textarea><div class="flex items-center gap-1 pr-1 pb-1 shrink-0"><button aria-label="Voice input" class="p-2 text-on-surface-variant hover:text-secondary transition-colors rounded-full flex items-center justify-center"><span class="material-symbols-outlined" data-icon="mic">mic</span></button><button aria-label="Send message" class="p-2 bg-primary text-on-primary rounded-full hover:bg-primary/90 transition-colors shadow-sm flex items-center justify-center"><span class="material-symbols-outlined" data-icon="send" style="font-variation-settings: 'FILL' 1;">send</span></button></div></div></div><nav class="bg-surface border-t border-surface-container-high px-margin-mobile py-2 shrink-0 pb-safe shadow-[0_-4px_15px_rgba(0,0,0,0.02)] z-20 relative flex items-center justify-around"><a href="#" class="flex flex-col items-center gap-1 p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="dashboard">dashboard</span><span class="text-[10px] font-label-md uppercase tracking-wider">Dashboard</span></a><a href="#" class="flex flex-col items-center gap-1 p-2 text-primary transition-colors"><span class="material-symbols-outlined" data-icon="smart_toy" style="font-variation-settings: 'FILL' 1;">smart_toy</span><span class="text-[10px] font-label-md uppercase tracking-wider">AI Assistant</span></a><a href="#" class="flex flex-col items-center gap-1 p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined" data-icon="insights">insights</span><span class="text-[10px] font-label-md uppercase tracking-wider">Insights</span></a></nav></div>
+<script>
+        // Simple script to auto-scroll chat to bottom on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer) {
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+    </script>
+
+
+</body></html>

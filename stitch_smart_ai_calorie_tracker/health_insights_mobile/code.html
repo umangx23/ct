@@ -1,0 +1,466 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>NutriAI - Health Insights</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#6bff8f",
+                    "surface-container-highest": "#d3e4fe",
+                    "on-secondary-fixed": "#001a42",
+                    "on-background": "#0b1c30",
+                    "primary": "#006e2f",
+                    "on-tertiary-container": "#004a31",
+                    "on-secondary-fixed-variant": "#004395",
+                    "secondary": "#0058be",
+                    "primary-fixed-dim": "#4ae176",
+                    "error-container": "#ffdad6",
+                    "outline": "#6d7b6c",
+                    "on-tertiary-fixed": "#002113",
+                    "on-secondary-container": "#fefcff",
+                    "background": "#f8f9ff",
+                    "primary-container": "#22c55e",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "tertiary": "#006c49",
+                    "inverse-surface": "#213145",
+                    "tertiary-container": "#28c38a",
+                    "on-surface-variant": "#3d4a3d",
+                    "on-primary-fixed-variant": "#005321",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#4ae176",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#004b1e",
+                    "surface-dim": "#cbdbf5",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed": "#002109",
+                    "surface-container-high": "#dce9ff",
+                    "secondary-container": "#2170e4",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "error": "#ba1a1a",
+                    "surface-variant": "#d3e4fe",
+                    "surface-container-low": "#eff4ff",
+                    "secondary-fixed": "#d8e2ff",
+                    "outline-variant": "#bccbb9",
+                    "secondary-fixed-dim": "#adc6ff",
+                    "surface-container": "#e5eeff",
+                    "on-error-container": "#93000a",
+                    "on-surface": "#0b1c30",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#006e2f",
+                    "surface": "#f8f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "stack-md": "16px",
+                    "gutter": "24px",
+                    "base": "4px",
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "16px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "label-md": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Manrope"
+                    ],
+                    "headline-lg-mobile": [
+                            "Manrope"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Manrope"
+                    ],
+                    "headline-lg": [
+                            "Manrope"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "stats-number": [
+                            "Manrope"
+                    ]
+            },
+            "fontSize": {
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "800"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "stats-number": [
+                            "20px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        /* Base styles to ensure consistency and smooth scrolling */
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overscroll-behavior-y: none; /* Prevent pull-to-refresh bounce for native feel */
+        }
+        
+        /* Hide scrollbar for clean horizontal scrolls */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Soft Ambient Shadow Definition */
+        .ambient-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Glassmorphic Utilities */
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.7); /* Mapping to surface-container-lowest roughly */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface pb-[90px] min-h-screen flex flex-col">
+<!-- Mobile Header -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md px-margin-mobile py-stack-md flex justify-between items-center transition-all duration-200" id="main-header">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Health Insights</h1>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-surface-container-highest flex-shrink-0">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="A close-up portrait of a young woman with a calm, healthy complexion, subtly smiling. The lighting is soft, high-key, and bright, reflecting a modern, optimistic wellness aesthetic. The background is a highly blurred, pristine white studio setting, ensuring the focus remains on her face and conveying a sense of clean, clinical precision mixed with empathetic human care." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5ThF6JczOcSr2SBOjXg5k23TgDTQYIyEr7i4xokD_Bf73zXTyehQfPQYlru2xT0hCfvWy-2IH612BgfRpNk4tmt-HFsGzwzq4vthK_bck6eqgDIogXDKcGpK3A8TPFOKlQKo8z-DweHV3Qqyr7Ziz1dP0X21BV5Hz2o8SxaAIq1gFGRulmAOOGOiXUm3w2HwMyOzVFfYBwiahxiZ-vse28mcdhRJmV7yCkg-yzTRM4lSjmEOvNSXPXR9e3ieO_I0_z_7fVAeHasSq">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-margin-mobile flex flex-col gap-stack-lg mt-stack-sm">
+<!-- Interactive Calendar Section -->
+<section class="bg-surface-container-lowest rounded-xl p-gutter ambient-shadow">
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">October 2023</h2>
+<div class="flex gap-2">
+<button aria-label="Previous Month" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button aria-label="Next Month" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Days of Week -->
+<div class="grid grid-cols-7 gap-1 text-center font-label-md text-label-md text-on-surface-variant mb-2">
+<div class="">M</div><div class="">T</div><div class="">W</div><div class="">T</div><div class="">F</div><div class="">S</div><div class="">S</div>
+</div>
+<!-- Calendar Grid -->
+<div class="grid grid-cols-7 gap-1">
+<!-- Previous month filler -->
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">25</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">26</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">27</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">28</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">29</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-40"><span class="font-body-md text-body-md text-on-surface-variant">30</span></div>
+<!-- Current month days -->
+<!-- Day 1: Perfect (Green dot) -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">1</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+</button>
+<!-- Day 2: Perfect -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">2</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+</button>
+<!-- Day 3: Missed goal (Orange/Error dot) -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">3</span>
+<div class="w-1.5 h-1.5 rounded-full bg-error mt-1"></div>
+</button>
+<!-- Day 4: Perfect -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">4</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+</button>
+<!-- Day 5: Partial (Yellow/Secondary dot) -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">5</span>
+<div class="w-1.5 h-1.5 rounded-full bg-secondary mt-1"></div>
+</button>
+<!-- Day 6: Perfect -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">6</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+</button>
+<!-- Day 7: Perfect -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors">
+<span class="font-body-md text-body-md">7</span>
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div>
+</button>
+<!-- ... Week 2 ... -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">8</span><div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">9</span><div class="w-1.5 h-1.5 rounded-full bg-error mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">10</span><div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">11</span><div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">12</span><div class="w-1.5 h-1.5 rounded-full bg-secondary mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">13</span><div class="w-1.5 h-1.5 rounded-full bg-primary mt-1"></div></button>
+<!-- Day 14: ACTIVE SELECTED DAY -->
+<button aria-current="date" class="aspect-square flex flex-col items-center justify-center p-1 rounded-full bg-primary text-on-primary shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-surface-container-lowest transition-transform transform scale-105">
+<span class="font-body-md text-body-md font-bold">14</span>
+<div class="w-1.5 h-1.5 rounded-full bg-on-primary mt-1"></div>
+</button>
+<!-- Future days (no dots yet) -->
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">15</span><div class="w-1.5 h-1.5 rounded-full bg-surface-variant mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">16</span><div class="w-1.5 h-1.5 rounded-full bg-surface-variant mt-1"></div></button>
+<button class="aspect-square flex flex-col items-center justify-center p-1 rounded-full hover:bg-surface-variant text-on-surface transition-colors"><span class="font-body-md text-body-md">17</span><div class="w-1.5 h-1.5 rounded-full bg-surface-variant mt-1"></div></button>
+<!-- truncated for brevity, visual intent achieved -->
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-50"><span class="font-body-md text-body-md text-on-surface-variant">...</span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-50"><span class="font-body-md text-body-md text-on-surface-variant"></span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-50"><span class="font-body-md text-body-md text-on-surface-variant"></span></div>
+<div class="aspect-square flex flex-col items-center justify-center p-1 opacity-50"><span class="font-body-md text-body-md text-on-surface-variant"></span></div>
+</div>
+</section>
+<!-- AI Intelligence Layer: Daily Intake Summary -->
+<section class="glass-panel rounded-xl p-gutter relative overflow-hidden ambient-shadow">
+<!-- AI Confidence Badge -->
+<div class="absolute top-4 right-4 bg-secondary/10 text-secondary px-2 py-1 rounded-full flex items-center gap-1 border border-secondary/20">
+<span class="material-symbols-outlined text-[14px]">smart_toy</span>
+<span class="font-label-md text-[12px]">Analyzed</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface mb-stack-md pr-24">Oct 14 Intake</h3>
+<div class="flex items-center gap-gutter mb-stack-md">
+<!-- Calorie Donut Chart -->
+<div class="w-24 h-24 relative flex items-center justify-center flex-shrink-0">
+<svg class="w-full h-full -rotate-90 drop-shadow-sm" viewBox="0 0 36 36">
+<!-- Track -->
+<path class="text-surface-variant" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+<!-- Progress (Primary Green) -->
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="82, 100" stroke-linecap="round" stroke-width="3.5" style="transition: stroke-dasharray 1s ease-out;"></path>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-stats-number text-stats-number text-on-surface leading-none">1,850</span>
+<span class="font-label-md text-[10px] text-on-surface-variant mt-1">/ 2,200 kcal</span>
+</div>
+</div>
+<!-- Macro Sparklines -->
+<div class="flex-1 space-y-3">
+<!-- Protein -->
+<div>
+<div class="flex justify-between font-label-md text-[12px] text-on-surface mb-1">
+<span class="font-bold">Protein</span>
+<span class="text-on-surface-variant">120g <span class="text-[10px]">/ 140g</span></span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%] rounded-full"></div>
+</div>
+</div>
+<!-- Carbs -->
+<div>
+<div class="flex justify-between font-label-md text-[12px] text-on-surface mb-1">
+<span class="font-bold">Carbs</span>
+<span class="text-on-surface-variant">200g <span class="text-[10px]">/ 220g</span></span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-[90%] rounded-full"></div>
+</div>
+</div>
+<!-- Fat -->
+<div>
+<div class="flex justify-between font-label-md text-[12px] text-on-surface mb-1">
+<span class="font-bold">Fat</span>
+<span class="text-on-surface-variant">45g <span class="text-[10px]">/ 60g</span></span>
+</div>
+<div class="h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-tertiary w-[75%] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Insight Note -->
+<div class="bg-surface-bright rounded-lg p-3 border border-surface-container-highest flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">check_circle</span>
+<p class="font-body-md text-[14px] text-on-surface leading-snug">
+<strong class="text-primary font-bold">On Track.</strong> Your protein timing was excellent today. Maintaining this helps stabilize energy levels for your evening walks.
+                </p>
+</div>
+</section>
+<!-- Simplified Trend Charts (Bento Stack) -->
+<section class="space-y-stack-md mb-stack-lg">
+<!-- Calorie Variance Chart -->
+<div class="bg-surface-container-lowest rounded-xl p-gutter ambient-shadow border border-surface-container-highest">
+<div class="flex justify-between items-center mb-stack-md">
+<h3 class="font-label-md text-label-md font-bold text-on-surface">Weekly Calorie Target</h3>
+<div class="bg-primary/10 text-primary px-2 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+<span class="font-label-md text-[12px] font-bold">-2% Avg</span>
+</div>
+</div>
+<!-- Bar Chart Representation -->
+<div class="h-28 w-full flex items-end justify-between gap-2 relative px-1">
+<!-- Target Line -->
+<div class="absolute top-[30%] left-0 w-full border-t border-dashed border-outline-variant z-0"></div>
+<!-- Bars (M-S) -->
+<div class="w-full bg-surface-container h-[60%] rounded-t-md relative z-10 hover:bg-primary-container transition-colors"></div>
+<div class="w-full bg-surface-container h-[75%] rounded-t-md relative z-10 hover:bg-primary-container transition-colors"></div>
+<!-- Over target (Error indication) -->
+<div class="w-full bg-error/80 h-[90%] rounded-t-md relative z-10"></div>
+<div class="w-full bg-surface-container h-[50%] rounded-t-md relative z-10 hover:bg-primary-container transition-colors"></div>
+<div class="w-full bg-surface-container h-[65%] rounded-t-md relative z-10 hover:bg-primary-container transition-colors"></div>
+<div class="w-full bg-surface-container h-[70%] rounded-t-md relative z-10 hover:bg-primary-container transition-colors"></div>
+<!-- Selected Day -->
+<div class="w-full bg-primary h-[60%] rounded-t-md relative z-10 shadow-[0_0_10px_rgba(0,110,47,0.3)]"></div>
+</div>
+<div class="flex justify-between mt-3 font-label-md text-[11px] text-on-surface-variant px-1">
+<span class="">M</span><span class="">T</span><span class="">W</span><span class="">T</span><span class="">F</span><span class="">S</span><span class="text-primary font-bold">S</span>
+</div>
+</div>
+<!-- Weight Trend (AI Predicted) -->
+<div class="bg-surface-container-lowest rounded-xl p-gutter ambient-shadow border border-surface-container-highest relative overflow-hidden">
+<div class="absolute top-4 right-4 bg-secondary/10 text-secondary px-2 py-1 rounded-full flex items-center gap-1 border border-secondary/20 z-10">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span class="font-label-md text-[12px]">Predicted</span>
+</div>
+<h3 class="font-label-md text-label-md font-bold text-on-surface mb-stack-lg">Weight Trend</h3>
+<!-- Smooth Line Chart SVG -->
+<div class="h-24 w-full relative">
+<svg class="w-full h-full overflow-visible" preserveAspectRatio="none" viewBox="0 0 100 40">
+<!-- Actual Data Line (Solid Primary) -->
+<path class="drop-shadow-sm" d="M0,35 Q15,32 30,30 T50,22" fill="none" stroke="#006e2f" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Predicted Data Line (Dashed Secondary) -->
+<path class="opacity-70" d="M50,22 Q75,15 100,8" fill="none" stroke="#0058be" stroke-dasharray="4,4" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Data Nodes -->
+<circle cx="0" cy="35" fill="#ffffff" r="3" stroke="#006e2f" stroke-width="2"></circle>
+<circle cx="25" cy="31" fill="#ffffff" r="3" stroke="#006e2f" stroke-width="2"></circle>
+<!-- Current Node -->
+<circle class="shadow-sm" cx="50" cy="22" fill="#006e2f" r="4.5"></circle>
+<!-- Future Node -->
+<circle cx="75" cy="15" fill="#ffffff" r="3" stroke="#0058be" stroke-width="2"></circle>
+<circle cx="100" cy="8" fill="#ffffff" r="3" stroke="#0058be" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-4 font-label-md text-[11px] text-on-surface-variant">
+<span class="">Oct 1</span>
+<span class="">Oct 7</span>
+<span class="text-primary font-bold">Today</span>
+<span class="text-secondary">Oct 31</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Mobile Bottom Navigation Shell -->
+<!-- Applies restriction: md:hidden -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 w-full bg-surface/90 backdrop-blur-xl border-t border-surface-container-highest flex justify-around items-center z-50 md:hidden pb-safe pt-2 pb-4 px-2 shadow-[0_-4px_20px_rgba(0,0,0,0.03)]"><!-- Dashboard (Inactive) -->
+<a class="flex flex-col items-center gap-1 py-1 px-4 text-on-surface-variant hover:text-primary transition-all duration-200 group" href="#">
+<div class="px-4 py-1 rounded-full group-hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+</div>
+<span class="font-label-md text-[11px] font-medium tracking-wide">Dashboard</span>
+</a>
+<!-- AI Assistant (Inactive) -->
+<a class="flex flex-col items-center gap-1 py-1 px-4 text-on-surface-variant hover:text-primary transition-all duration-200 group" href="#">
+<div class="px-4 py-1 rounded-full group-hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[24px]">smart_toy</span>
+</div>
+<span class="font-label-md text-[11px] font-medium tracking-wide">AI Assistant</span>
+</a>
+<!-- Insights (Active) -->
+<a aria-current="page" class="flex flex-col items-center gap-1 py-1 px-4 text-primary transition-all duration-200" href="#">
+<div class="bg-primary-container/30 px-5 py-1 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<span class="font-label-md text-[11px] font-bold tracking-wide">Insights</span>
+</a></nav>
+<!-- Subtle scroll effect script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('main-header');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 10) {
+                    header.classList.add('shadow-sm');
+                    header.classList.replace('bg-surface/80', 'bg-surface/95');
+                } else {
+                    header.classList.remove('shadow-sm');
+                    header.classList.replace('bg-surface/95', 'bg-surface/80');
+                }
+            });
+        });
+    </script>
+
+
+</body></html>
