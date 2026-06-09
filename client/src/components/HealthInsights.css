@@ -6,6 +6,15 @@
   margin: 0 auto;
 }
 
+/* Loading state */
+.insights-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  color: var(--on-surface-variant);
+}
+
 @media (min-width: 992px) {
   .insights-container {
     flex-direction: row;
@@ -163,6 +172,54 @@
   border: 1px solid rgba(34, 197, 94, 0.15);
 }
 
+/* Secondary colour variant for the prediction badge */
+.trend-insight-badge--secondary {
+  background-color: rgba(0, 88, 190, 0.08);
+  color: var(--secondary);
+  border-color: rgba(0, 88, 190, 0.15);
+}
+
+/* Trends chart card - flex column layout */
+.trends-chart-card {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Small subtitle below card title */
+.trend-card-subtitle {
+  font-size: 12px;
+  color: var(--on-surface-variant);
+  margin-top: 2px;
+}
+
+/* Weekday labels below trend bars */
+.trend-weekdays-footer {
+  margin-top: 12px;
+  margin-bottom: 0;
+}
+
+/* Weight card loading / empty state */
+.weight-loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+}
+
+.weight-loading-text {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+}
+
+/* Date labels row under weight SVG */
+.weight-date-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--on-surface-variant);
+  margin-top: 8px;
+}
+
 .trend-bars-container {
   display: flex;
   align-items: flex-end;
@@ -182,11 +239,16 @@
   z-index: 1;
 }
 
+/* Fixed target-line position at 70% height */
+.trend-target-line {
+  bottom: 70%;
+}
+
 .trend-chart-bar {
   flex: 1;
   background-color: var(--surface-container-highest);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  height: 0;
+  height: var(--bar-height, 0%);
   transition: height 0.5s ease-out;
   z-index: 2;
 }
@@ -349,3 +411,51 @@
   font-weight: 700;
   font-size: 14px;
 }
+
+/* Meal log section label */
+.meal-log-section-title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--on-background);
+  margin-bottom: 8px;
+}
+
+/* Empty state text in sidebar */
+.sidebar-empty-text {
+  font-size: 13px;
+  color: var(--on-surface-variant);
+  padding: 12px 0;
+}
+
+/* AI button — full width in sidebar */
+.insights-ai-btn {
+  width: 100%;
+}
+
+/* Responsive adjustments for narrow phone viewports */
+@media (max-width: 575px) {
+  .calendar-grid {
+    gap: 4px;
+  }
+  
+  .calendar-day-btn {
+    padding: var(--space-xs);
+    border-radius: var(--radius-md);
+  }
+  
+  .day-number {
+    font-size: 12px;
+  }
+  
+  .day-dot {
+    width: 4px;
+    height: 4px;
+  }
+  
+  .calendar-weekdays {
+    font-size: 9px;
+    margin-bottom: var(--space-xs);
+  }
+}
+

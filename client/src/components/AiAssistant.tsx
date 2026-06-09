@@ -157,13 +157,13 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
       {/* Scanning Banner */}
       {scanning === 'photo' && (
         <div className="scanning-toast">
-          <span className="material-symbols-outlined animate-spin" style={{ fontSize: '16px' }}>sync</span>
+          <span className="material-symbols-outlined animate-spin icon-toast">sync</span>
           AI Scanning food photo...
         </div>
       )}
       {scanning === 'voice' && (
         <div className="scanning-toast">
-          <span className="material-symbols-outlined animate-pulse" style={{ fontSize: '16px', color: 'var(--error)' }}>mic</span>
+          <span className="material-symbols-outlined animate-pulse icon-toast icon-error">mic</span>
           Listening to your description...
         </div>
       )}
@@ -188,16 +188,16 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
         {messages.map((msg) => (
           <div key={msg.id} className={`message-wrapper ${msg.sender}`}>
             <div className="chat-avatar">
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+              <span className="material-symbols-outlined icon-chat-avatar">
                 {msg.sender === 'ai' ? 'smart_toy' : 'person'}
               </span>
             </div>
             
-            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <div className="message-column">
               <div className="message-bubble">
                 {msg.sender === 'ai' && msg.portionSuggestion && (
                   <div className="ai-scan-badge">
-                    <span className="material-symbols-outlined" style={{ fontSize: '12px' }}>verified</span>
+                    <span className="material-symbols-outlined icon-badge">verified</span>
                     AI Scanned
                   </div>
                 )}
@@ -208,7 +208,7 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
                   </div>
                 )}
                 
-                <p style={{ whiteSpace: 'pre-wrap' }}>
+                <p className="message-text">
                   {/* Clean bold parsing for mock messages */}
                   {msg.text.split('**').map((part, index) => 
                     index % 2 === 1 ? <strong key={index}>{part}</strong> : part
@@ -278,7 +278,7 @@ const AiAssistant: React.FC<AiAssistantProps> = ({ onMealLogged, prefillMessage,
               disabled={sending || !inputText.trim() || scanning !== null}
               title="Send Message"
             >
-              <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>send</span>
+              <span className="material-symbols-outlined icon-chat-avatar">send</span>
             </button>
           </div>
         </div>

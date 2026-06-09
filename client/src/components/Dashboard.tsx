@@ -17,6 +17,9 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
     Math.round((today.caloriesConsumed / settings.calorieGoal) * 100)
   );
 
+  // Helper: round n to the nearest 5 for CSS step class lookup
+  const snap5 = (n: number) => Math.round(Math.min(100, n) / 5) * 5;
+
   // SVG configurations for 180px container:
   // Radius = 70. Circumference = 2 * Math.PI * 70 = 439.82
   const r = 70;
@@ -70,7 +73,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
         <div className="card-header-container">
           <h3 className="card-title">Calories</h3>
           <span className={`status-badge ${status.className}`}>
-            <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>
+            <span className="material-symbols-outlined icon-sm">
               {status.icon}
             </span>
             {status.text}
@@ -127,7 +130,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
 
       {/* 2. Macronutrients Breakdown */}
       <section className="lifted-card macros-card">
-        <h3 className="card-title" style={{ marginBottom: '24px' }}>Macronutrients</h3>
+        <h3 className="card-title macros-card-title">Macronutrients</h3>
         
         <div className="macros-container">
           {/* Protein */}
@@ -139,10 +142,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
               <span className="macro-val">{today.proteinConsumed}g / {settings.proteinGoal}g</span>
             </div>
             <div className="macro-progress-bar">
-              <div 
-                className="macro-progress-fill protein" 
-                style={{ width: `${proteinPercent}%` }}
-              ></div>
+              <div className={`macro-progress-fill protein fill-pct-${snap5(proteinPercent)}`}></div>
             </div>
           </div>
 
@@ -155,10 +155,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
               <span className="macro-val">{today.carbsConsumed}g / {settings.carbsGoal}g</span>
             </div>
             <div className="macro-progress-bar">
-              <div 
-                className="macro-progress-fill carbs" 
-                style={{ width: `${carbsPercent}%` }}
-              ></div>
+              <div className={`macro-progress-fill carbs fill-pct-${snap5(carbsPercent)}`}></div>
             </div>
           </div>
 
@@ -171,10 +168,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
               <span className="macro-val">{today.fatConsumed}g / {settings.fatGoal}g</span>
             </div>
             <div className="macro-progress-bar">
-              <div 
-                className="macro-progress-fill fat" 
-                style={{ width: `${fatPercent}%` }}
-              ></div>
+              <div className={`macro-progress-fill fat fill-pct-${snap5(fatPercent)}`}></div>
             </div>
           </div>
         </div>
@@ -194,7 +188,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
         <div className="trends-header">
           <h3 className="card-title">Weekly Trend</h3>
           <span className="trends-badge">
-            <span className="material-symbols-outlined" style={{ fontSize: '13px' }}>insights</span>
+            <span className="material-symbols-outlined icon-xs">insights</span>
             AI Predicted
           </span>
         </div>
@@ -208,10 +202,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
                 <div className="trend-bar-tooltip">
                   {t.calories} kcal
                 </div>
-                <div 
-                  className={`trend-bar ${isToday ? 'current' : ''}`} 
-                  style={{ height: `${height}%` }}
-                ></div>
+                <div className={`trend-bar ${isToday ? 'current' : ''} bar-h-${snap5(height)}`}></div>
                 <span className="trend-bar-label">{t.label}</span>
               </div>
             );
@@ -225,8 +216,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
           <h3 className="card-title">Recent Meals</h3>
           <button 
             onClick={onLogMealClick}
-            style={{ color: 'var(--secondary)', fontWeight: 600, fontSize: '14px' }}
-            className="hover:underline"
+            className="add-meal-link"
           >
             + Add Meal
           </button>
@@ -235,10 +225,10 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
         <div className="meals-list-content no-scrollbar">
           {recentMeals.length === 0 ? (
             <div className="no-meals-state">
-              <span className="material-symbols-outlined" style={{ fontSize: '48px', color: 'var(--outline-variant)' }}>
+              <span className="material-symbols-outlined icon-3xl no-meals-icon">
                 no_food
               </span>
-              <p style={{ marginTop: '12px' }}>No meals logged yet today.</p>
+              <p className="no-meals-text">No meals logged yet today.</p>
             </div>
           ) : (
             recentMeals.map((meal) => (
@@ -271,7 +261,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
                   onClick={() => handleDeleteMeal(meal.id)}
                   title="Delete meal"
                 >
-                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+                  <span className="material-symbols-outlined icon-lg">
                     delete
                   </span>
                 </button>
@@ -284,14 +274,14 @@ const Dashboard: React.FC<DashboardProps> = ({ data, onLogMealClick, onNavigate 
       {/* 5. AI Call to Action */}
       <section className="glass-panel ai-callout-card">
         <div className="ai-icon-container">
-          <span className="material-symbols-outlined" style={{ fontSize: '30px' }}>
+          <span className="material-symbols-outlined icon-xl">
             smart_toy
           </span>
         </div>
         <h3>Need Meal Ideas?</h3>
         <p>Ask NutriAI for recipes based on your remaining macros or scan a food photo.</p>
         <button className="btn-secondary" onClick={() => onNavigate('assistant')}>
-          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+          <span className="material-symbols-outlined icon-md">
             chat_bubble
           </span>
           Chat with AI

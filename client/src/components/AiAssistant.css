@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 112px); /* Calc height based on headers */
+  height: calc(100dvh - 112px);
   max-width: 640px;
   margin: 0 auto;
   background-color: var(--surface-container-lowest);
@@ -14,6 +15,7 @@
 @media (max-width: 767px) {
   .chat-container {
     height: calc(100vh - 160px);
+    height: calc(100dvh - 160px);
     border: none;
     border-radius: 0;
     box-shadow: none;
@@ -142,8 +144,8 @@
 
 .message-wrapper.ai .message-bubble {
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   color: var(--on-surface);
   border-top-left-radius: var(--space-xs);
@@ -336,4 +338,43 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   z-index: 50;
   animation: fadeIn 0.2s ease-out;
+}
+
+/* Icon size tokens used in JSX */
+.icon-toast       { font-size: 16px !important; }
+.icon-badge       { font-size: 12px !important; }
+.icon-chat-avatar { font-size: 18px !important; }
+
+/* Error colour token (for voice mic icon) */
+.icon-error { color: var(--error) !important; }
+
+/* Message column wrapper (replaces inline flex-column div) */
+.message-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Message body text with pre-wrap */
+.message-text {
+  white-space: pre-wrap;
+}
+
+/* Spin / Pulse keyframe animations for scanning icons */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulseFade {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+.animate-pulse {
+  animation: pulseFade 1.2s ease-in-out infinite;
 }

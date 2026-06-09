@@ -135,7 +135,7 @@ const Settings: React.FC<SettingsProps> = ({ settings, onSettingsUpdate }) => {
           </div>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
+        <div className="settings-save-row">
           <button 
             type="submit" 
             className="btn-primary" 

@@ -128,7 +128,7 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', color: 'var(--on-surface-variant)' }}>
+      <div className="insights-loading">
         <p>Loading Health Insights...</p>
       </div>
     );
@@ -208,11 +208,11 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
         {/* Trends Row */}
         <div className="trends-grid">
           {/* Calorie Trend */}
-          <div className="lifted-card" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="lifted-card trends-chart-card">
             <div className="calendar-header">
               <div>
                 <h4 className="card-title">Calorie Trend</h4>
-                <p style={{ fontSize: '12px', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
+                <p className="trend-card-subtitle">
                   Avg: {avgCalories} kcal / day
                 </p>
               </div>
@@ -221,26 +221,26 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
 
             <div className="trend-bars-container">
               {/* Target Line at 75% height */}
-              <div className="trend-chart-bg-line" style={{ bottom: '70%' }}></div>
+              <div className="trend-chart-bg-line trend-target-line"></div>
               
               {/* Show trend for Oct 1 to Oct 7 */}
               {Array.from({ length: 7 }).map((_, idx) => {
                 const dayNum = idx + 1;
                 const info = getDayInfo(dayNum);
                 const cals = info ? info.calories : 0;
-                // Height scale max 3000 kcal
-                const pct = Math.min(100, Math.round((cals / 2800) * 100));
+                // Height scale max 2800 kcal; snap to nearest 5 for CSS step class
+                const rawPct = Math.min(100, Math.round((cals / 2800) * 100));
+                const snapPct = Math.round(Math.max(10, rawPct) / 5) * 5;
                 return (
-                  <div 
-                    key={dayNum} 
-                    className={`trend-chart-bar ${info ? info.status : 'met'}`}
-                    style={{ height: `${Math.max(12, pct)}%` }}
+                  <div
+                    key={dayNum}
+                    className={`trend-chart-bar ${info ? info.status : 'met'} chart-h-${snapPct}`}
                     title={`Oct ${dayNum}: ${cals} kcal`}
                   ></div>
                 );
               })}
             </div>
-            <div className="calendar-weekdays" style={{ marginTop: '12px', marginBottom: 0 }}>
+            <div className="calendar-weekdays trend-weekdays-footer">
               <div>Oct 1</div>
               <div>Oct 2</div>
               <div>Oct 3</div>
@@ -252,15 +252,15 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
           </div>
 
           {/* Weight progress line graph */}
-          <div className="lifted-card" style={{ display: 'flex', flexDirection: 'column' }}>
+          <div className="lifted-card trends-chart-card">
             <div className="calendar-header">
               <div>
                 <h4 className="card-title">Weight Progress</h4>
-                <p style={{ fontSize: '12px', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
+                <p className="trend-card-subtitle">
                   Current: {weightHistory[weightHistory.length - 1]?.weight || 168.4} lbs
                 </p>
               </div>
-              <span className="trend-insight-badge" style={{ backgroundColor: 'rgba(0, 88, 190, 0.08)', color: 'var(--secondary)', borderColor: 'rgba(0, 88, 190, 0.15)' }}>
+              <span className="trend-insight-badge trend-insight-badge--secondary">
                 Predict: -1.2 lb
               </span>
             </div>
@@ -296,11 +296,11 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
                 </svg>
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '120px' }}>
-                <p style={{ fontSize: '13px', color: 'var(--on-surface-variant)' }}>Loading weight data...</p>
+              <div className="weight-loading-state">
+                <p className="weight-loading-text">Loading weight data...</p>
               </div>
             )}
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--on-surface-variant)', marginTop: '8px' }}>
+            <div className="weight-date-row">
               <span>Oct 1</span>
               <span>Oct 7</span>
               <span>Oct 13</span>
@@ -352,13 +352,13 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
         </div>
 
         {/* Meals Logs */}
-        <h4 style={{ fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--on-background)', marginBottom: '8px' }}>
+        <h4 className="meal-log-section-title">
           Meal Log
         </h4>
         
         <div className="sidebar-meals-log no-scrollbar">
           {selectedDayMeals.length === 0 ? (
-            <p style={{ fontSize: '13px', color: 'var(--on-surface-variant)', padding: '12px 0' }}>
+            <p className="sidebar-empty-text">
               No food recorded for this date.
             </p>
           ) : (
@@ -376,12 +376,11 @@ const HealthInsights: React.FC<HealthInsightsProps> = ({ calorieGoal, onNavigate
 
         {/* Ask AI Trigger */}
         <button 
-          className="btn-secondary" 
+          className="btn-secondary insights-ai-btn" 
           onClick={handleAskAiAboutDay}
           disabled={selectedDayMeals.length === 0}
-          style={{ width: '100%' }}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>auto_awesome</span>
+          <span className="material-symbols-outlined icon-md">auto_awesome</span>
           Ask AI about this day
         </button>
       </aside>

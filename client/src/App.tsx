@@ -5,6 +5,8 @@ import AiAssistant from './components/AiAssistant';
 import HealthInsights from './components/HealthInsights';
 import Settings from './components/Settings';
 import LogMealModal from './components/LogMealModal';
+import logoLight from './assets/logo-light.png';
+import logoDark from './assets/logo-dark.png';
 
 export interface UserSettings {
   calorieGoal: number;
@@ -140,10 +142,10 @@ function App() {
       {/* Desktop Sidenav */}
       <aside className="desktop-sidebar">
         <div className="sidebar-header">
-          <div className="profile-avatar">
+          <div className="brand-logo">
             <img 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuB667NqXJ9lY-Eu6MQxp1KIoJ5YehfzkYiJzPGVJJGAryyHgpgWYQGLQDoWRls-5xFpiJIXCtZGHLmIkG6cKcs3GjjNIeSMVVbhjYnPQ3UWMKi2rxmIuuhMjLxg2BpZkwgxNvzXyUxcWdcYMigRWelrI2P4TaTD6ND2Grr0GZ7Zm7090ZPPSDrK0IWK9zSPsyTaaBf6PJAeeDpo1qsbs_o_QGBYNH3ZBUgZkCjQGlTGOqPBA_MXAoQxs9kBXDEavmlgsCaHN699-H6v" 
-              alt="User Profile" 
+              src={theme === 'dark' ? logoLight : logoDark} 
+              alt="NutriAI Logo" 
             />
           </div>
           <div className="brand-details">
@@ -191,12 +193,6 @@ function App() {
             <span className="material-symbols-outlined">settings</span>
             Settings
           </button>
-          <button className="nav-item" onClick={handleThemeToggle}>
-            <span className="material-symbols-outlined">
-              {theme === 'light' ? 'dark_mode' : 'light_mode'}
-            </span>
-            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
-          </button>
         </div>
       </aside>
 
@@ -223,7 +219,13 @@ function App() {
 
       {/* Mobile Header */}
       <header className="mobile-header">
-        <h1>{getPageTitle()}</h1>
+        <div className="mobile-brand">
+          <img 
+            src={theme === 'dark' ? logoLight : logoDark} 
+            alt="NutriAI Logo" 
+          />
+          <h1>{getPageTitle()}</h1>
+        </div>
         <button className="icon-btn" aria-label="Profile">
           <span className="material-symbols-outlined">account_circle</span>
         </button>
@@ -232,7 +234,7 @@ function App() {
       {/* Main Content Area */}
       <main className="main-canvas">
         {loading && !dashboardData ? (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
+          <div className="app-loading">
             <p>Loading NutriAI Calorie Tracker...</p>
           </div>
         ) : (

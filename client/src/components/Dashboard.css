@@ -7,6 +7,14 @@
   margin: 0 auto;
 }
 
+/* Icon size utilities */
+.icon-xs  { font-size: 13px !important; }
+.icon-sm  { font-size: 14px !important; }
+.icon-md  { font-size: 18px !important; }
+.icon-lg  { font-size: 20px !important; }
+.icon-xl  { font-size: 30px !important; }
+.icon-3xl { font-size: 48px !important; }
+
 /* Card base details */
 .card-header-container {
   display: flex;
@@ -20,6 +28,10 @@
   font-size: 18px;
   font-weight: 700;
   color: var(--on-surface);
+}
+
+.macros-card-title {
+  margin-bottom: 24px;
 }
 
 .status-badge {
@@ -110,7 +122,7 @@
   width: 100%;
   margin-top: var(--space-md);
   padding-top: var(--space-md);
-  border-t: 1px solid var(--outline-variant);
+  border-top: 1px solid var(--outline-variant);
 }
 
 .stat-item {
@@ -190,10 +202,34 @@
 }
 
 .macro-progress-fill {
+  width: 0%;
   height: 100%;
   border-radius: var(--radius-full);
   transition: width 0.5s ease-out;
 }
+
+/* Pre-generated fill widths — 0% to 100% in 5% steps */
+.fill-pct-0   { width:   0%; }
+.fill-pct-5   { width:   5%; }
+.fill-pct-10  { width:  10%; }
+.fill-pct-15  { width:  15%; }
+.fill-pct-20  { width:  20%; }
+.fill-pct-25  { width:  25%; }
+.fill-pct-30  { width:  30%; }
+.fill-pct-35  { width:  35%; }
+.fill-pct-40  { width:  40%; }
+.fill-pct-45  { width:  45%; }
+.fill-pct-50  { width:  50%; }
+.fill-pct-55  { width:  55%; }
+.fill-pct-60  { width:  60%; }
+.fill-pct-65  { width:  65%; }
+.fill-pct-70  { width:  70%; }
+.fill-pct-75  { width:  75%; }
+.fill-pct-80  { width:  80%; }
+.fill-pct-85  { width:  85%; }
+.fill-pct-90  { width:  90%; }
+.fill-pct-95  { width:  95%; }
+.fill-pct-100 { width: 100%; }
 
 .macro-progress-fill.protein { background-color: var(--secondary); }
 .macro-progress-fill.carbs { background-color: var(--tertiary-container); }
@@ -287,10 +323,34 @@
 
 .trend-bar {
   width: 100%;
+  height: 10%;
   background-color: rgba(0, 110, 47, 0.35);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
   transition: height 0.5s ease-out, background-color var(--transition-fast);
 }
+
+/* Pre-generated bar heights — 0% to 100% in 5% steps */
+.bar-h-0   { height:   0%; }
+.bar-h-5   { height:   5%; }
+.bar-h-10  { height:  10%; }
+.bar-h-15  { height:  15%; }
+.bar-h-20  { height:  20%; }
+.bar-h-25  { height:  25%; }
+.bar-h-30  { height:  30%; }
+.bar-h-35  { height:  35%; }
+.bar-h-40  { height:  40%; }
+.bar-h-45  { height:  45%; }
+.bar-h-50  { height:  50%; }
+.bar-h-55  { height:  55%; }
+.bar-h-60  { height:  60%; }
+.bar-h-65  { height:  65%; }
+.bar-h-70  { height:  70%; }
+.bar-h-75  { height:  75%; }
+.bar-h-80  { height:  80%; }
+.bar-h-85  { height:  85%; }
+.bar-h-90  { height:  90%; }
+.bar-h-95  { height:  95%; }
+.bar-h-100 { height: 100%; }
 
 .trend-bar-container:hover .trend-bar {
   background-color: var(--primary);
@@ -391,6 +451,7 @@
   font-weight: 600;
   padding: 2px 8px;
   border-radius: var(--radius-full);
+  flex-shrink: 0;
 }
 
 .meal-meta {
@@ -430,6 +491,12 @@
   opacity: 1;
 }
 
+@media (max-width: 767px) {
+  .meal-delete-btn {
+    opacity: 1;
+  }
+}
+
 .meal-delete-btn:hover {
   color: var(--error);
   background-color: var(--error-container);
@@ -439,6 +506,27 @@
   text-align: center;
   padding: var(--space-xl);
   color: var(--on-surface-variant);
+}
+
+.no-meals-icon {
+  color: var(--outline-variant);
+}
+
+.no-meals-text {
+  margin-top: 12px;
+}
+
+/* Add meal link button */
+.add-meal-link {
+  color: var(--secondary);
+  font-weight: 600;
+  font-size: 14px;
+  transition: color var(--transition-fast);
+}
+
+.add-meal-link:hover {
+  color: var(--secondary-container);
+  text-decoration: underline;
 }
 
 /* 5. AI Call to Action Card */

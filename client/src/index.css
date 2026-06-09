@@ -72,20 +72,20 @@
 
 /* Dark Mode Overrides */
 [data-theme='dark'] {
-  --background: #0b1c30;
+  --background: #121212;
   --on-background: #f8f9ff;
-  --surface: #12253b;
-  --surface-container-lowest: #081423;
-  --surface-container-low: #172d47;
-  --surface-container: #1b3552;
-  --surface-container-high: #213d5e;
-  --surface-container-highest: #28476b;
+  --surface: #1e1e1e;
+  --surface-container-lowest: #000000;
+  --surface-container-low: #181818;
+  --surface-container: #242424;
+  --surface-container-high: #2a2a2a;
+  --surface-container-highest: #333333;
   --on-surface: #f8f9ff;
   --on-surface-variant: #b5c7b3;
   --outline: #8c9c8a;
   --outline-variant: #4f5f4f;
-  --surface-dim: #07111c;
-  --surface-bright: #1b3552;
+  --surface-dim: #0a0a0a;
+  --surface-bright: #242424;
 }
 
 /* Base Styles */
@@ -145,6 +145,7 @@ input, textarea, select {
   word-wrap: normal;
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
 }
 
@@ -166,8 +167,8 @@ input, textarea, select {
 /* AI Layer - Glassmorphism Card Style */
 .glass-panel {
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   border-radius: var(--radius-xl);
   padding: var(--space-lg);
@@ -175,7 +176,7 @@ input, textarea, select {
 }
 
 [data-theme='dark'] .glass-panel {
-  background: rgba(18, 37, 59, 0.7);
+  background: rgba(30, 30, 30, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -247,11 +248,30 @@ input, textarea, select {
   animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Hide scrollbars but keep functionality */
+/* Hide scrollbars but keep scroll functionality */
+
+/* Chrome, Safari, iOS Safari, Samsung Internet — webkit pseudo-element */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* IE / Legacy Edge */
 .no-scrollbar {
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
+
+/* Firefox & Chrome 121+ — guarded so unsupporting browsers skip silently */
+@supports (scrollbar-width: none) {
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Eliminate 300ms tap delay in mobile browsers */
+button,
+a,
+.calendar-day-btn,
+.mobile-nav-item {
+  touch-action: manipulation;
+}
+

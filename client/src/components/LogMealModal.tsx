@@ -80,13 +80,13 @@ const LogMealModal: React.FC<LogMealModalProps> = ({ isOpen, onClose, onLogMeal 
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
             {formError && (
-              <div className="settings-alert error" style={{ margin: '0 0 16px 0', padding: '8px 12px' }}>
-                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>error</span>
-                <span style={{ fontSize: '13px' }}>{formError}</span>
+              <div className="settings-alert error modal-error-alert">
+                <span className="material-symbols-outlined icon-sm">error</span>
+                <span className="modal-error-text">{formError}</span>
               </div>
             )}
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="modal-fields-stack">
               
               <div className="form-field">
                 <label htmlFor="food-name">Food Name *</label>
@@ -100,20 +100,14 @@ const LogMealModal: React.FC<LogMealModalProps> = ({ isOpen, onClose, onLogMeal 
                 />
               </div>
 
-              <div className="form-grid" style={{ marginBottom: 0 }}>
+              <div className="form-grid modal-type-cals-grid">
                 <div className="form-field">
                   <label htmlFor="meal-type">Meal Type</label>
                   <select
                     id="meal-type"
                     value={mealType}
                     onChange={(e) => setMealType(e.target.value)}
-                    style={{
-                      padding: '10px 14px',
-                      borderRadius: 'var(--radius-md)',
-                      border: '1px solid var(--outline-variant)',
-                      backgroundColor: 'var(--surface-container-lowest)',
-                      color: 'var(--on-background)'
-                    }}
+                    className="modal-select"
                   >
                     <option value="Breakfast">Breakfast</option>
                     <option value="Lunch">Lunch</option>
@@ -135,7 +129,7 @@ const LogMealModal: React.FC<LogMealModalProps> = ({ isOpen, onClose, onLogMeal 
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+              <div className="macros-fields-grid">
                 <div className="form-field">
                   <label htmlFor="protein">Protein (g)</label>
                   <input
